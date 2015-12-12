@@ -77,13 +77,15 @@
 	<div class="container">
 		{{>website_form}}
 		<hr/>
-		<ol>
-		{{#each websites}}
-			{{#if filtering_items}}
-				{{>website_item}}
-			{{/if}}
-		{{/each}}
-		</ol>
+		<div class="row">
+			{{#each websites}}
+				{{#if filtering_items}}
+					<div class="col-xs-12 website-item">
+						{{>website_item}}
+					</div>
+				{{/if}}
+			{{/each}}
+		</div>
 	</div>
 </template>
 

@@ -1,0 +1,282 @@
+<head>
+  <title>siteace</title>
+</head>
+
+<body>
+	
+</body>
+
+<template name="ApplicationLayout">
+  {{> yield "navbar"}}
+  {{> yield "main"}}
+</template>
+
+<template name="start_screen">
+	<div class="jumbotron start-message">
+		<div class="container">
+			<p>Welcome to SiteAce, {{username}}!</p>
+			<a href="/list" class="btn btn-info">GO! <span class="glyphicon glyphicon-play-circle" aria-hidden="true"></span></a>
+		</div>
+	</div>
+</template>
+
+<template name="navbar">
+	<!-- navbar  - you will be putting the login functions here -->
+	<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	  	<div class="navbar-header">
+	      <a class="navbar-brand" href="/">Site Ace</a>
+	      <ul class="nav navbar-nav navbar-left">
+	      	<li><a href="/" class="home-page">Home</a></li>
+	      	<li><a href="/list" class="list-page">List</a></li>
+	      	<li><a href="/about" class="about-page">About</a></li>
+	      	<li><p class="navbar-text navbar-right">{{> loginButtons}}</p></li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+</template>
+
+<template name="website_form">
+	<a class="btn btn-default js-toggle-website-form add-btn" href="#">
+  		<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+	</a>
+	<p class="add-message">Add a new item to our list!</p>
+	<!-- alert with warning -->
+	<div class="alert alert-warning alert-dismissible signed-out" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<strong>Warning!</strong> You are signed out! Sign in and try again.
+	</div>
+	<div class="alert alert-warning alert-dismissible not-complete" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		<strong>Warning!</strong> Some fields was not filled! Fix it and try again.
+	</div>
+	<!-- form for adding -->
+	<div id="website_form" class="hidden_div">
+		<form class="js-save-website-form">
+		  <div class="form-group">
+		    <label for="url">Site address <span class="asterisk">*</span></label>
+		    <input type="text" class="form-control" id="url" placeholder="http://www.mysite.com">
+		  </div>
+		  <div class="form-group">
+		    <label for="title">Title</label>
+		    <input type="text" class="form-control" id="title" placeholder="Mysite">
+		  </div>
+		    <div class="form-group">
+		    <label for="description">Description <span class="asterisk">*</span></label>
+		    <input type="text" class="form-control" id="description" placeholder="I found this site really useful for ...">
+		  </div>
+
+		  <button type="submit" class="btn btn-default">Submit</button>
+		</form>
+	</div>
+</template>
+
+<!-- template that displays several website items -->
+<template name="website_list">
+	<div class="container">
+		{{>website_form}}
+		<hr/>
+		<ol>
+		{{#each websites}}
+			{{#if filtering_items}}
+				{{>website_item}}
+			{{/if}}
+		{{/each}}
+		</ol>
+	</div>
+</template>
+
+<template name="search_list">
+	<div class="container">
+		<ol>
+		{{#each websites}}
+			{{#if filtering_items}}
+				{{>website_item}}
+			{{/if}}
+		{{/each}}
+		</ol>
+	</div>
+</template>
+
+<!-- template that displays individual website entries -->
+<template name="website_item">
+<li>
+	<a href="{{url}}" class="title-link">{{title}}</a>
+	<p>
+		{{description}}
+	</p>
+	<a href="/list/{{_id}}" class="details-link">Details</a>
+	<p class="display-details">Created: {{createdOn}}</p>
+	<a href="#" class="btn btn-default js-upvote">
+		<span class="glyphicon glyphicon-arrow-up" aria-hidden="true">{{ratingUp}}</span>
+	</a>
+	<a href="#" class="btn btn-default js-downvote">
+		<span class="glyphicon glyphicon-arrow-down" aria-hidden="true">{{ratingDown}}</span>
+	</a>
+</li>
+</template>
+
+<template name="item">
+	<div class="container">
+		<a href="{{url}}" class="title-link">{{title}}</a>
+		<p>{{description}}</p>
+		<br/>
+		<p class="display-details">Item was created on: {{createdOn}} (universal time)</p>
+		<p class="display-details">Autor: {{username}}</p>
+		<!-- alert with warning -->
+		<div class="alert alert-warning alert-dismissible not-an-autor" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<strong>Warning!</strong> You are not allowed to delete an item if you are not its author!
+		</div>
+		<div class="alert alert-warning alert-dismissible signed-out" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<strong>Warning!</strong> You are signed out! Sign in and try again.
+		</div>
+		<!-- button set -->
+		<a href="#" class="btn btn-default js-upvote">
+			<span class="glyphicon glyphicon-arrow-up" aria-hidden="true"> {{ratingUp}}</span>
+		</a>
+		<a href="#" class="btn btn-default js-downvote">
+			<span class="glyphicon glyphicon-arrow-down" aria-hidden="true"> {{ratingDown}}</span>
+		</a>
+		<a href="#" class="btn btn-default js-delete">
+			<span class="glyphicon glyphicon-remove" aria-hidden="true"> Delete</span>
+		</a>
+		<hr/>
+		<!-- alert with warning -->
+		<div class="alert alert-warning alert-dismissible not-a-comment" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<strong>Warning!</strong> You try to send an empty comment! Write something and try again.
+		</div>
+		<div class="alert alert-warning alert-dismissible signed-out-comments" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<strong>Warning!</strong> You are signed out! Sign in and try again.
+		</div>
+		<div class="alert alert-warning alert-dismissible not-an-autor-comments" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<strong>Warning!</strong> You are not allowed to delete a comment if you are not its author!
+		</div>
+		<!-- form for writing comment -->
+		<div id="website_form">
+		<form class="js-save-comment-form">
+		  <textarea rows="2" maxlength="250" placeholder="Write a comment..." class="comment-input" id="commentBody"></textarea>
+		  <button type="submit" class="btn btn-default comment-send">Send</button>
+		</form>
+	</div>
+		<ul class="comment-list">
+			{{#each comments}}
+				{{> comment_item}}
+			{{/each}}
+		</ul>
+	</div>
+</template>
+
+<template name="comment_item">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-4 col-sm-2 comment-user">
+				<p>{{username}}</p>
+				<p class="display-details">{{createdOn}}</p>
+			</div>
+			<div class="col-xs-6 comment-body">
+				<p>{{commentBody}}</p>
+			</div>
+			<div class="col-xs-2">
+				<a href="#" class="btn btn-default js-comment-delete comment-delete">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"> Delete</span>
+				</a>
+			</div>
+		</div>
+	</div>
+</template>
+
+<template name="about">
+	<div class="container">
+		<h1 class="page-header">About SiteAce</h1>
+		<h3>Hello, {{username}}! I am happy to see you on my site!</h3>
+		<p>Here you can find some info about how this site works and what you can do with it.</p>
+		<br/>
+		<div class="contents">
+			<h4 class="center">Contents</h4>
+			<a href="#what" class="cont-link">What is it for?</a><br>
+			<a href="#activities" class="cont-link">What you could do?</a><br>
+			<a href="#warnings" class="cont-link">What are the warning message?</a><br>
+			<a href="#next" class="cont-link">What's next?</a><br>
+			<a href="#author" class="cont-link">How to access with the author?</a>
+		</div>
+		<div class="about-list">
+			<h3><a id="what">What is it for?</a></h3><hr>
+			<p>It is a social website aggregator for storing links to interesting webpages. You can browse all collection and vote for any item of it. If you want to contribute, you should register or log in if you already have an account.</p>
+			<p>Have fun!</p>
+		</div>
+		<div class="about-list">
+			<h3><a id="activities">What you could do?</a></h3><hr>
+			<p>Here is the full list of all activities available on this site:</p>
+			<ul class="about-items">
+				<li><span class="highlighted">Create an account</span> Any user, visited this site, could easily create an account. To do it, press "Sign In" and choose an option "Create account". If you already have one and currently logged in but still want to create a new account, just sign out and follow previous instruction!</li>
+				<li><span class="highlighted">Browse collection</span> Any visitor could browse all added links with its descriptions and ratings. To do it, just open the "List" page.</li>
+				<li><span class="highlighted">Vote up and down</span> Any user could vote up or down any item from the collection. This function available on the "List" and "Details" pages by clicking on <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> and <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span> respectively. Number of votes affects the position of the element on the page "List".</li>
+				<li><span class="highlighted">View individual items</span> Any visitor could browse additional info about each item in collection. This additional info includes title, description, date of creation, autor name, ratings and comments for this item. You can get an access to this info by pressing "Details" under the description of the item on the "List" page.</li>
+				<li><span class="highlighted">Add a new item</span> Registered users could add their own item to the collection. To do it, open the "List" page and press the <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> button and fill out all the fields in the form. Finally, press "Submit" to finish the process. If you did everything right, your item will appear at the end of the list because it has the lowest rating now.</li>
+				<li><span class="highlighted">Delete item</span> Users also can easily delete thier own items. For deleting an item, open its "Details" and press "Delete". After this step the item will be removed from the database and you will be automatically redirected to the "List" page. <span class="highlighted-warning">Warning:</span> you should be an author of the item to be able to delete it from the database!</li>
+				<li><span class="highlighted">Comment items</span> If you want to share your opinion with other users, you could leave a comment! This function allowed for all registered users on the "Details" page (to open this page, press the link "Details" under the description of the item on the "List" page). Tape some text and press "Send" to add a new comment.</li>
+			</ul>
+		</div>
+		<div class="about-list">
+			<h3><a id="warnings">What are the warning message?</a></h3><hr>
+			<p>While working with SiteAce you can meet some of the warning messages. This means that you tried to make some sort of action to which you have no access. Here is the full list of possible warnings with suggestions how to avoid it:</p>
+			<ul class="about-items">
+				<li><div>
+					<p><span class="highlighted-warning">Signed out!</span> Some activities are permitted only to registered users. If you will try to do something that not allowed to any visitor this warning will appear. It looks like this:</p>
+					<img src="/warning1.png" class="about-image" alt="warning message"/>
+					<p>Activities permitted only to registered users:</p>
+					<ul class="markered-list">
+						<li>Adding a new item to the collection</li>
+						<li>Deleting existing item from the collection (<span class="display-details">For doing this you should also be an author of the item!</span>)</li>
+						<li>Commenting items on the "Details" page</li>
+						<li>Deleting comments from the database (<span class="display-details">For doing this you should also be an author of the comment!</span>)</li>
+					</ul>
+					<p>To fix the problem you should register or log in with an existing account.</p><hr class="separate-line"/>
+				</div></li>
+				<li><div>
+					<p><span class="highlighted-warning">Not complete!</span> To add a item, you should fill out all the required fields (marked with red asterisk). These fields are the site address and the description. When you leave them blank, the warning message will appear and an item will not created. Message looks like this:</p>
+					<img src="/warning3.png" class="about-image" alt="warning message"/>
+					<p>To fix the problem you should fill out these two fields.</p><hr class="separate-line"/>
+				</div></li>
+				<li><div>
+					<p><span class="highlighted-warning">Not an author!</span> To be able to delete an item from the collection you should be its author. Any other user could not delete it. If you try to delete an item which was created by someone else, the following message will be shown:</p>
+					<img src="/warning2.png" class="about-image" alt="warning message"/>
+					<p>Or, if you tried to delete a comment, it will looks like this:</p>
+					<img src="/warning5.png" class="about-image" alt="warning message"/>
+					<p>If you are sure that an author is you and you could see your nickname in the field "Author" but still has the same error, check if you are logged in with an account that displayed as an author. It is not possible to delete any item if you are signed out.</p>
+				</div></li>
+				<li><div>
+					<p><span class="highlighted-warning">Blank comment!</span> Nobody wants to see empty fields instead of user comments. To prevent sending blank comments SiteAce checks your input and sends you a message if it does not contain at least one symbol. This warning looks like here:</p>
+					<img src="/warning4.png" class="about-image" alt="warning message"/>
+					<p>Just type something! But do not forget about the message length limitation of 250 characters.</p>
+				</div></li>
+			</ul>
+		</div>
+		<div class="about-list">
+			<h3><a id="next">What's next?</a></h3><hr>
+			<p>Current version have some problems with view on the mobile devises. This will be fixed.</p>
+			<p>The start screen will be improoved. Now it looks not very good, but it will be fixed.</p>
+		</div>
+		<div class="about-list">
+			<h3><a id="author">How to access with the author?</a></h3><hr>
+			<p>If you have any suggestions or feedback, I will be glad to hear it from you, {{username}}! Also it would be great if you will inform about differents issues or bugs. Here are some links how you can contact with me:</p>
+			<ul class="markered-list">
+				<li>GitHub: <a href="https://github.com/Kabachok">Kabachok</a></li>
+				<li>LinkedIn: <a href="https://www.linkedin.com/in/koumoridaria">Diana Ivanova</a></li>
+				<li>Facebook: <a href="https://www.facebook.com/koumori.daria">Daria Koumori</a></li>
+				<li>DeviantArt: <a href="http://dariakoumori.deviantart.com/">Daria Koumori</a></li>
+				<li>E-mail: koumori-daria@mail.ru</li>
+			</ul>
+			<p>Many thanks for your attention!</p>
+		</div>
+		<hr>
+		<p class="center">2015</p>
+		<p></p>
+	</div>
+</template>

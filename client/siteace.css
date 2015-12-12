@@ -1,0 +1,166 @@
+/* CSS declarations go here */
+.hidden_div{
+	display:none;
+}
+.display-details{
+	font-style: italic;
+	font-size: 90%;
+	color: #999;
+}
+.js-upvote{
+	background-color: #DFFFE7;
+}
+.js-downvote{
+	background-color: #FFE8E8;
+}
+.title-link, .title-link:visited{
+	text-decoration: none;
+	font-size: 115%;
+	color: #a56cdd;
+}
+.title-link:hover{
+	text-decoration: none;
+	color: #73008F;
+}
+.start-message{
+	text-align: center;
+	font-size: 500%;
+	color: #A576FF;
+}
+.add-btn{
+	display: inline-block;
+}
+.add-message{
+	display: inline-block;
+	font-size: 150%;
+	padding-bottom: -15px;
+}
+.details-link, details-link:visited{
+	text-decoration: none;
+	color: #9999CC;
+}
+.details-link:hover{
+	text-decoration: none;
+	color: #A09AFF;
+}
+.alert-warning{
+	display: none;
+}
+.page-header{
+	background-color: #efefef;
+	padding: 10px;
+	margin: 0px auto 20px auto;
+	border-radius: 20px;
+	text-align: center;
+}
+.about-list{
+	border-radius: 10px;
+	border: 1px solid lightgray;
+	padding: 5px 15px;
+	margin: 10px auto;
+}
+.about-list a, .about-list a:visited{
+	text-decoration: none;
+	color: #9999CC;
+}
+.about-list a:hover{
+	text-decoration: none;
+	color: #A09AFF;
+}
+.about-items li{
+	margin-bottom: 20px;
+	list-style-type: none;
+}
+.highlighted{
+	font: bold 120%;
+	background-color: #DFFFE7;
+	padding: 5px 10px;
+	border-radius: 20px;
+	border: 1px dotted #bdddc5;
+}
+.highlighted-warning{
+	font: bold 120%;
+	background-color: #FFEFBF;
+	padding: 5px 10px;
+	border-radius: 20px;
+	border: 1px dotted #FFC44F;
+}
+.about-image{
+	border-radius: 10px;
+	max-width: 350px;
+}
+.markered-list li{
+	list-style-type: circle;
+	margin-bottom: auto;
+}
+.asterisk{
+	font: bold 150%;
+	color: red;
+}
+.separate-line{
+	width: 300px;
+	text-align: center;
+	color: #666;
+}
+.center{
+	text-align: center;
+}
+.contents{
+	padding: 10px 30px;
+	border-radius: 15px;
+	border: 2px dotted #bdddc5;
+	max-width: 350px;
+	margin: 0px auto;
+}
+.cont-link, .cont-link:visited, .cont-link:active, .cont-link:hover{
+	text-decoration: none;
+	color: #663366;
+	font-size: 120%;
+}
+.comment-list{
+	list-style-type: none;
+}
+.comment-user{
+	background-color: #F4E8FF;
+	border-radius: 10px;
+	text-align: center;
+	padding: 10px 5px;
+	color: #666;
+	min-height: 80px;
+	margin-bottom: 20px;
+}
+.comment-body{
+	color: #666;
+	min-height: 80px;
+	padding: 15px;
+	margin-bottom: 20px;
+	border-bottom: 1px solid #ddd;
+	border-top: 1px solid #ddd;
+	border-radius: 10px;
+}
+.comment-input{
+	border-radius: 10px;
+	border: 1px solid #bdddc5;
+	padding: 20px;
+	max-width: 100%;
+	min-width: 550px;
+}
+.comment-send{
+	border-radius: 10px;
+	border: 1px solid #bdddc5;
+	background-color: #DFE7FF;
+	display: inline;
+	height: 80px;
+	vertical-align: top;
+}
+.comment-send:hover{
+	background-color: #bdddc5;
+}
+.comment-delete, .comment-delete:active, .comment-delete:hover, .comment-delete:focus, .comment-delete:visited{
+	width: 100%;
+	text-align: center;
+	padding: 10px;
+	background-color: #FFE8E8;
+	border-color: transparent;
+	border-radius: 10px;
+}
